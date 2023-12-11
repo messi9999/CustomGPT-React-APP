@@ -88,7 +88,16 @@ export default function ChatPage() {
     const reqBody = {
       message: userMessage
     };
-    const response = await axios.post(BASE_URL, reqBody);
+    const response = await axios.post(`${BASE_URL}/api/chatbots`, reqBody);
+    if (!response.ok) {
+      console.error(
+        `Error fetching messages: ${response.status} ${response.statusText}`
+      );
+      throw new Error(
+        `Failed to list messages: ${response.status} ${response.statusText}`
+      );
+    }
+
     var chatBotMsg = response.data.message;
 
     // var chatBotMsg = `I'm sorry to hear you're experiencing a stomachache. Discomfort can have many causes and may be related to a range of factors including diet, stress, or a medical condition. As a virtual PCOS practitioner, I can offer some general advice, but keep in mind it's always important to consult a healthcare professional for personalized medical advice, especially if the pain is severe, persistent, or accompanied by other symptoms.\n
